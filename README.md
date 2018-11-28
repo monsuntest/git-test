@@ -1,2 +1,2 @@
 # git-test
-Test
+This is a test with projects structure templates
