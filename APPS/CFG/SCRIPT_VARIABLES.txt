@@ -1,0 +1,38 @@
+SET S_HOJAS = 'FUNCTIONS,TIME,COLORS,METRICS,MISC';
+SET S_F_HOJA = SUBFIELD(S_HOJAS, ',', $1);
+
+FOR i=1 TO SUBSTRINGCOUNT(S_HOJAS, ',')+1
+	LET S_HOJA = $(S_F_HOJA(i));
+
+	VARIABLES_TMP:
+	LOAD
+	    METRIC,
+	
+		// Evita error de lectura al traer caracteres '$' y ',' reemplazandolos temporalmente por signos de interrogación.
+		REPLACE(REPLACE(EXPRESSION,'$','¿'),',','?') AS EXPRESSION
+	FROM ..\CFG\VARIABLES.xls (biff, embedded labels, table is $(S_HOJA)$)
+	WHERE $(S_APP)=1;
+	
+	LET S_ROW_COUNT = NUMMAX(1, NOOFROWS('VARIABLES_TMP'))-1;
+	SET S_REPLACE 	= REPLACE(REPLACE($1,'¿','$'),'?',',');
+	
+	FOR j=0 TO '$(S_ROW_COUNT)'
+		LET S_NOMBRE_VAR 		= PEEK('METRIC', $(j), 'VARIABLES_TMP');
+		LET S_VALOR_VAR			= PEEK('EXPRESSION', $(j), 'VARIABLES_TMP');
+	
+		// Anula las comillas simples insertadas al importar desde Excel.
+		LET $(S_NOMBRE_VAR) 	= REPLACE($(S_REPLACE('$(S_VALOR_VAR)')), CHR(39)&CHR(39), CHR(39));
+	NEXT
+NEXT
+
+LET S_HOJAS=;
+LET S_F_HOJA=;
+LET S_HOJA=;
+LET S_ROW_COUNT=;
+LET S_NOMBRE_VAR=;
+LET S_VALOR_VAR=;
+LET S_REPLACE=;
+LET i=;
+LET j=;
+
+DROP TABLE VARIABLES_TMP;
