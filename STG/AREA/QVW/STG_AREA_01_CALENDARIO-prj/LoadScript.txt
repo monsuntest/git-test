@@ -1,0 +1,42 @@
+﻿///$tab Main
+$(Include=..\cfg\variables.txt);
+
+X_ReloadTime:
+LOAD
+	NOW() 		AS StartTime,
+	OSUSER()	AS ReloadUser
+AUTOGENERATE (1);
+
+$(Include=..\cfg\config.txt);
+///$tab CALENDARIO
+//SE CREA EL CALENDARIO MAESTRO
+
+LET VMINDATE = NUM(MAKEDATE(2013,12,30));
+LET VMAXDATE = FLOOR(TODAY());
+
+CALENDARIO:
+LOAD 
+	 FECHA													AS %FECHA, 
+	 YEAR(FECHA)											AS AÑO, 
+	 MONTH(FECHA)											AS MES, 
+	 DAY(FECHA) 											AS DIA,
+     DUAL(	MONTH(FECHA) & '-' & RIGHT(YEAR(FECHA),2),
+     		YEAR(FECHA) & NUM(MONTH(FECHA),'00')
+     )					              						AS MES_AÑO     
+     ;
+LOAD 
+	 DATE(RECNO()+$(VMINDATE)) 								AS FECHA
+AUTOGENERATE VMAXDATE - VMINDATE; 
+///$tab STORE
+STORE CALENDARIO INTO ..\QVD\STG_AREA_01_CALENDARIO.QVD;
+DROP TABLE CALENDARIO;
+///$tab END
+JOIN (X_ReloadTime)
+LOAD 
+	NOW() 								AS EndTime 
+AUTOGENERATE(1);
+
+tExecTime:
+LOAD
+	TIME(EndTime-StartTime,'hh:mm:ss') 	AS execTime
+RESIDENT X_ReloadTime;

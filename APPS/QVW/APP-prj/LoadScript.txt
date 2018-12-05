@@ -1,0 +1,80 @@
+﻿///$tab Main
+$(Include=..\cfg\variables.txt);
+
+X_ReloadTime:
+LOAD
+	NOW() 		AS StartTime,
+	OSUSER()	AS ReloadUser
+AUTOGENERATE (1);
+
+$(Include=..\cfg\config.txt);
+
+SET S_APP=Ventas;
+LET S_CORTE=YEAR(TODAY())-3;
+
+SET HIDEPREFIX='%';
+
+
+
+
+///$tab VARIABLES
+$(Include=..\cfg\script_variables.txt);
+
+
+
+
+
+///$tab VENTAS
+//CARGAR TABLA VENTAS
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+///$tab LKS
+// CARGAR TABLA LK
+
+///$tab LKS
+// CARGAR TABLA LK
+///$tab COLORES
+// CARGAR TABLA DE COLORES
+
+///$tab CALENDAR
+// CARGAR CALENDARIO
+
+///$tab METADATA
+//SE MAPEAN LA METADATA PARA RENOMBRAR LOS CAMPOS DEL MODELO
+
+MAP_FIELDS:
+MAPPING
+LOAD 
+	 RTRIM(Field), 
+     Label
+FROM
+[..\..\USR_FILES\METADATA\METADATA.xlsx]
+(ooxml, embedded labels, table is Sheet1);
+
+//SE RENOMBRAN LOS CAMPOS DEL MODELO SEGUN LA TABLA DE METADATA
+
+RENAME FIELDS USING MAP_FIELDS;
+///$tab END
+JOIN (X_ReloadTime)
+LOAD 
+	NOW() 								AS EndTime 
+AUTOGENERATE(1);
+
+tExecTime:
+LOAD
+	TIME(EndTime-StartTime,'hh:mm:ss') 	AS execTime
+RESIDENT X_ReloadTime;
+///$tab ES
+EXIT SCRIPT

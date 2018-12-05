@@ -1,0 +1,54 @@
+﻿///$tab Main
+// SE INLUYEN LAS VARIABLES DE FORMATO
+
+$(Include=..\cfg\variables.txt);
+
+X_ReloadTime:
+LOAD
+	NOW() 		AS StartTime,
+	OSUSER()	AS ReloadUser
+AUTOGENERATE (1);
+
+// SE INCLUYEN LAS VARIABLES DE CONFIGURACION
+$(Include=..\cfg\config.txt);
+
+// NOMBRAR AQUI LA TABLA
+SET S_TABLA = 'TABLA';
+
+
+
+
+///$tab TABLA
+// CARGAR LA TABLA
+$(S_TABLA):
+LOAD  * INLINE [EJEMPLO
+1]
+;
+
+
+
+
+
+
+
+
+
+
+
+///$tab STORE
+// GUARDAR AQUI LA TABLA
+
+STORE $(S_TABLA) INTO ..\QVD\DATA_FUENTE_$(S_TABLA).QVD;
+
+DROP TABLE $(S_TABLA);
+
+///$tab END
+JOIN (X_ReloadTime)
+LOAD 
+	NOW() 								AS EndTime 
+AUTOGENERATE(1);
+
+tExecTime:
+LOAD
+	TIME(EndTime-StartTime,'hh:mm:ss') 	AS execTime
+RESIDENT X_ReloadTime;
