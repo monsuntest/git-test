@@ -13,7 +13,7 @@ AUTOGENERATE (1);
 $(Include=..\cfg\config.txt);
 
 // NOMBRAR AQUI LA TABLA
-SET S_TABLA = 'TABLA';
+SET S_TABLA = 'FACT';
 
 
 
@@ -21,9 +21,15 @@ SET S_TABLA = 'TABLA';
 ///$tab TABLA
 // CARGAR LA TABLA
 $(S_TABLA):
-LOAD  * INLINE [EJEMPLO
-1]
-;
+LOAD ID_TRANSACCION, 
+     ID_PRODUCTO, 
+     ID_CLIENTE, 
+     TIPO_VTA, 
+     FECHA, 
+     Importe
+FROM
+[..\..\..\FUENTES_MOCK\FACT.xls]
+(biff, embedded labels, table is FACT$);
 
 
 
@@ -38,7 +44,7 @@ LOAD  * INLINE [EJEMPLO
 ///$tab STORE
 // GUARDAR AQUI LA TABLA
 
-STORE $(S_TABLA) INTO ..\QVD\DATA_FUENTE_$(S_TABLA).QVD;
+STORE $(S_TABLA) INTO ..\QVD\DATA_ERP_$(S_TABLA).QVD;
 
 DROP TABLE $(S_TABLA);
 
