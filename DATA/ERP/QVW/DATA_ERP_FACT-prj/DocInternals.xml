@@ -22,17 +22,10 @@
   </FieldSrcTables>
   <TableViewData></TableViewData>
   <Bookmarks></Bookmarks>
-  <SavedByVersion>12.10.20100.0</SavedByVersion>
+  <SavedByVersion>12.20.20100.0</SavedByVersion>
   <ForceBackEndMacroExecution>false</ForceBackEndMacroExecution>
   <FieldTags>
     <ScriptBased>
-      <FieldTagData>
-        <Tag>$key</Tag>
-        <FieldNames>
-          <String>$Field</String>
-          <String>$Table</String>
-        </FieldNames>
-      </FieldTagData>
       <FieldTagData>
         <Tag>$hidden</Tag>
         <FieldNames>
@@ -60,8 +53,12 @@
         <FieldNames>
           <String>$Field</String>
           <String>$Table</String>
+          <String>$Rows</String>
+          <String>$Fields</String>
+          <String>$FieldNo</String>
           <String>$Info</String>
           <String>ReloadUser</String>
+          <String>TIPO_VTA</String>
         </FieldNames>
       </FieldTagData>
       <FieldTagData>
@@ -69,27 +66,27 @@
         <FieldNames>
           <String>$Field</String>
           <String>$Table</String>
+          <String>$Rows</String>
+          <String>$Fields</String>
+          <String>$FieldNo</String>
           <String>$Info</String>
           <String>ReloadUser</String>
+          <String>TIPO_VTA</String>
         </FieldNames>
       </FieldTagData>
       <FieldTagData>
         <Tag>$numeric</Tag>
         <FieldNames>
-          <String>$Rows</String>
-          <String>$Fields</String>
-          <String>$FieldNo</String>
           <String>StartTime</String>
-          <String>EndTime</String>
-          <String>execTime</String>
-        </FieldNames>
-      </FieldTagData>
-      <FieldTagData>
-        <Tag>$integer</Tag>
-        <FieldNames>
+          <String>ID_TRANSACCION</String>
+          <String>ID_PRODUCTO</String>
+          <String>ID_CLIENTE</String>
+          <String>FECHA</String>
+          <String>Importe</String>
           <String>$Rows</String>
           <String>$Fields</String>
           <String>$FieldNo</String>
+          <String>EndTime</String>
           <String>execTime</String>
         </FieldNames>
       </FieldTagData>
@@ -97,7 +94,35 @@
         <Tag>$timestamp</Tag>
         <FieldNames>
           <String>StartTime</String>
+          <String>FECHA</String>
           <String>EndTime</String>
+        </FieldNames>
+      </FieldTagData>
+      <FieldTagData>
+        <Tag>$integer</Tag>
+        <FieldNames>
+          <String>ID_TRANSACCION</String>
+          <String>ID_PRODUCTO</String>
+          <String>ID_CLIENTE</String>
+          <String>FECHA</String>
+          <String>Importe</String>
+          <String>$Rows</String>
+          <String>$Fields</String>
+          <String>$FieldNo</String>
+          <String>execTime</String>
+        </FieldNames>
+      </FieldTagData>
+      <FieldTagData>
+        <Tag>$date</Tag>
+        <FieldNames>
+          <String>FECHA</String>
+        </FieldNames>
+      </FieldTagData>
+      <FieldTagData>
+        <Tag>$key</Tag>
+        <FieldNames>
+          <String>$Field</String>
+          <String>$Table</String>
         </FieldNames>
       </FieldTagData>
     </ScriptBased>
@@ -114,4 +139,6 @@
   <ConnectionInfo></ConnectionInfo>
   <GenericDerivedDefinitions></GenericDerivedDefinitions>
   <GenericDerivedFields></GenericDerivedFields>
+  <BnfOff>false</BnfOff>
+  <CreatedAfterSingleQuoteExactSearch>false</CreatedAfterSingleQuoteExactSearch>
 </DocInternals>

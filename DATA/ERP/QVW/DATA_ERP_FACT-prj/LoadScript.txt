@@ -15,6 +15,8 @@ $(Include=..\cfg\config.txt);
 // NOMBRAR AQUI LA TABLA
 SET S_TABLA = 'FACT';
 
+// NOMBRAR AQUI LA TABLA GONZA
+SET S_GONZA = 'GONZA';
 
 
 
