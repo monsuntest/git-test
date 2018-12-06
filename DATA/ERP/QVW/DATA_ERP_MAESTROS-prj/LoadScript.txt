@@ -1,0 +1,113 @@
+﻿///$tab Main
+// SE INLUYEN LAS VARIABLES DE FORMATO
+
+$(Include=..\cfg\variables.txt);
+
+X_ReloadTime:
+LOAD
+	NOW() 		AS StartTime,
+	OSUSER()	AS ReloadUser
+AUTOGENERATE (1);
+
+// SE INCLUYEN LAS VARIABLES DE CONFIGURACION
+$(Include=..\cfg\config.txt);
+
+
+
+
+
+///$tab CLIENTES
+// NOMBRAR AQUI LA TABLA
+SET S_TABLA = 'CLIENTES';
+
+// CARGAR LA TABLA
+$(S_TABLA):
+LOAD 
+	 ID_CLIENTE, 
+     Cliente, 
+     Pais
+FROM
+[..\..\..\FUENTES_MOCK\LKs.xls]
+(biff, embedded labels, table is Clientes$);
+
+
+
+// GUARDAR AQUI LA TABLA
+
+STORE $(S_TABLA) INTO ..\QVD\DATA_ERP_$(S_TABLA).QVD;
+
+DROP TABLE $(S_TABLA);
+
+
+
+
+
+
+
+
+
+
+
+
+///$tab PRODUCTOS
+// NOMBRAR AQUI LA TABLA
+SET S_TABLA = 'PRODUCTOS';
+
+// CARGAR LA TABLA
+$(S_TABLA):
+LOAD ID_PRODUCTO, 
+     Producto
+FROM
+[..\..\..\FUENTES_MOCK\LKs.xls]
+(biff, embedded labels, table is Productos$);
+
+
+
+// GUARDAR AQUI LA TABLA
+
+STORE $(S_TABLA) INTO ..\QVD\DATA_ERP_$(S_TABLA).QVD;
+
+DROP TABLE $(S_TABLA);
+
+
+
+
+
+
+
+///$tab TC
+// NOMBRAR AQUI LA TABLA
+SET S_TABLA = 'TC';
+
+// CARGAR LA TABLA
+$(S_TABLA):
+LOAD FECHA, 
+     TC
+FROM
+[..\..\..\FUENTES_MOCK\LKs.xls]
+(biff, embedded labels, table is TC$);
+
+
+
+// GUARDAR AQUI LA TABLA
+
+STORE $(S_TABLA) INTO ..\QVD\DATA_ERP_$(S_TABLA).QVD;
+
+DROP TABLE $(S_TABLA);
+
+
+
+
+
+
+
+///$tab END
+JOIN (X_ReloadTime)
+LOAD 
+	NOW() 								AS EndTime 
+AUTOGENERATE(1);
+
+tExecTime:
+LOAD
+	TIME(EndTime-StartTime,'hh:mm:ss') 	AS execTime
+RESIDENT X_ReloadTime;
