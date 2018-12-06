@@ -5,7 +5,7 @@ $(Include=..\cfg\variables.txt);
 
 X_ReloadTime:
 LOAD
-	NOW() 		AS StartTimes,
+	NOW() 		AS StartTime,
 	OSUSER()	AS ReloadUser
 AUTOGENERATE (1);
 
@@ -14,8 +14,6 @@ $(Include=..\cfg\config.txt);
 
 // NOMBRAR AQUI LA TABLA
 SET S_TABLA = 'FACT';
-
-SET S_TABLA_2 = 'NACHITO';
 
 
 
