@@ -1,0 +1,1 @@
+This folders is for QVD files that we usually don't keep in a repository
